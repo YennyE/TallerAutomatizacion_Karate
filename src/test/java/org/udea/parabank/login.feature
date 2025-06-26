@@ -1,5 +1,5 @@
-@parabank_login
-Feature: Login to Parabank
+@appContact_login
+Feature: Login to app for contact
 
   Background:
     * url baseUrl
@@ -7,23 +7,19 @@ Feature: Login to Parabank
 
   Scenario: Customer Login
     Given path 'login'
-    And path 'john' //userName
-    And path 'demo' //password
-    When method GET
+    And request { "email": "eliza@gmail.com", "password": "123456789"}
+    When method POST
     Then status 200
     And match response ==
     """
     {
-       "id": '#number',
-       "firstName": '#string',
-       "lastName": '#string',
-       "address": {
-            "street": '#string',
-            "city": '#string',
-            "state": '#string',
-            "zipCode": '#string'
-        },
-       "phoneNumber": '#string',
-       "ssn": '#string'
+    "user": {
+        "_id": '#string',
+        "firstName": '#string',
+        "lastName": '#string',
+        "email": '#string',
+        "__v": '#number'
+    },
+    "token": '#string'
     }
     """
